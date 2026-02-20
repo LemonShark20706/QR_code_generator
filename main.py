@@ -155,3 +155,39 @@ def try_tester(func):
             print(ConsolColor.PreSetUpColoredTextLine("Operation ended.", "info"))
     return wrapper
 
+@timer
+@try_tester
+def generate_qr_code(data: str, filename) -> None:
+    qr = qrcode.QRCode(
+        version=1,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="#00FF00", back_color="#0B000E")
+    img.save(filename)
+
+@timer
+@try_tester
+def generateCode():
+    while canRun:= True:
+        data = input("Enter the data to encode in the QR code: ") 
+        filename = "qr_code.png"
+
+        if data == "":
+            raise ValueError("Data cannot be empty. Please enter valid data.")
+
+        if filename == "":
+            raise ValueError("Filename cannot be empty. Please enter a valid filename.")
+
+        generate_qr_code(data, filename)
+        print(f"QR code generated and saved as {filename}")
+
+        if input("Do you want to generate another QR code? (yes/no): ").lower() != "yes":
+            canRun = False
+            print("Exiting the QR code generator. Goodbye!")
+
+if __name__ == "__main__":
+    generateCode()
