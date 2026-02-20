@@ -166,13 +166,14 @@ def generate_qr_code(data: str, filename) -> None:
     qr.add_data(data)
     qr.make(fit=True)
 
-    img = qr.make_image(fill_color="#00FF00", back_color="#0B000E")
+    img = qr.make_image(fill_color="black", back_color="white")
     img.save(filename)
 
 @timer
 @try_tester
 def generateCode():
-    while canRun:= True:
+    canRun: bool = True
+    while canRun:
         data = input("Enter the data to encode in the QR code: ") 
         filename = "qr_code.png"
 
@@ -185,7 +186,7 @@ def generateCode():
         generate_qr_code(data, filename)
         print(f"QR code generated and saved as {filename}")
 
-        if input("Do you want to generate another QR code? (yes/no): ").lower() != "yes":
+        if input("Do you want to generate another QR code? (yes/no): ").lower() == "no":
             canRun = False
             print("Exiting the QR code generator. Goodbye!")
 
