@@ -169,7 +169,6 @@ def generate_qr_code(data: str, filename) -> None:
     img = qr.make_image(fill_color="black", back_color="white")
     img.save(filename)
 
-@timer
 @try_tester
 def generateCode():
     canRun: bool = True
